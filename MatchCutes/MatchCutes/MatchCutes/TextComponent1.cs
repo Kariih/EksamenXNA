@@ -17,6 +17,10 @@ namespace MatchCutes
     /// </summary>
     public class TextComponent1 : Microsoft.Xna.Framework.GameComponent
     {
+
+        public int Score { get; set; }
+        private SpriteFont _font;
+
         public TextComponent1(Game game)
             : base(game)
         {
