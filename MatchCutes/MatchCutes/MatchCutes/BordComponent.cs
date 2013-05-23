@@ -12,6 +12,14 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MatchCutes
 {
+    public enum GemType
+    {
+        None,
+        Blue,
+        Green,
+        Orange,
+        Star
+    }
 
     public class BordComponent : Microsoft.Xna.Framework.DrawableGameComponent
     {
@@ -29,6 +37,7 @@ namespace MatchCutes
         private Texture2D _blueGem;
         private Texture2D _greenGem;
         private Texture2D _orangeGem;
+        private Texture2D _starGem;
         private Rectangle _gemSource = new Rectangle(0, 56, 100, 114);
 
         private bool _blocksAreFalling;
@@ -36,6 +45,7 @@ namespace MatchCutes
         private List<Point> _blueHits = new List<Point>();
         private List<Point> _greenHits = new List<Point>();
         private List<Point> _orangeHits = new List<Point>();
+        private List<Point> _starHits = new List<Point>();
 
         Color _fadedColor = new Color(160, 160, 160, 160);
         private Point _selected = new Point(-1, -1);
@@ -61,6 +71,8 @@ namespace MatchCutes
         {
             _input = (InputComponent)Game.Services.GetService(typeof(InputComponent));
             _ScoreServ = (ScoreService)Game.Services.GetService(typeof(ScoreService));
+            _ScoreServ.Score = 0;
+            _ScoreServ.gameOver = false;
 
             base.Initialize();
 
@@ -88,7 +100,11 @@ namespace MatchCutes
                 GemType gem = ((GemType)_randomizer.Next(1, 4));
                 while (i > 1 && (Playfield[i - 1, 0] == gem && Playfield[i - 2, 0] == gem))
                     gem = ((GemType)_randomizer.Next(1, 4));
-                Playfield[i, 0] = gem;
+               
+                
+                Playfield[i, 0] =_randomizer.Next(20) == 0 ? GemType.Star : gem;
+
+
             }
             _remainingMoves = _allowedMovesBeforeSpawn;
             _selected.X = _selected.Y = -1;
@@ -101,6 +117,7 @@ namespace MatchCutes
             _greenGem = Game.Content.Load<Texture2D>("Gem Green");
             _blueGem = Game.Content.Load<Texture2D>("Gem Blue");
             _orangeGem = Game.Content.Load<Texture2D>("Gem Orange");
+            _starGem = Game.Content.Load<Texture2D>("Star");
             base.LoadContent();
         }
 
@@ -186,7 +203,7 @@ namespace MatchCutes
                 int hits = 0;
                 for (int y = yStart; y < fieldY; y++)
                 {
-                    if (gem != Playfield[column, y])
+                    if (gem != Playfield[column, y] && Playfield[column, y] != GemType.Star)
                     {
                         if (hits < 4)
                             hits = 0;
@@ -212,7 +229,7 @@ namespace MatchCutes
                 int hits = 0;
                 for (int x = xStart; x < fieldX; x++)
                 {
-                    if (gem != Playfield[x, row])
+                    if (gem != Playfield[x, row] && Playfield[x, row] != GemType.Star)
                     {
                         if (hits < 4)
                             hits = 0;
@@ -262,6 +279,9 @@ namespace MatchCutes
                 case GemType.Orange:
                     _orangeHits.Add(position);
                     break;
+                case GemType.Star:
+                    _starHits.Add(position);
+                    break;
             }
         }
 
@@ -304,6 +324,9 @@ namespace MatchCutes
                             break;
                         case GemType.Orange:
                             toDraw = _orangeGem;
+                            break;
+                        case GemType.Star:
+                            toDraw = _starGem;
                             break;
                         case GemType.None:
                             continue;

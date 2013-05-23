@@ -51,7 +51,7 @@ namespace MatchCutes
             {
                 if(_restartButton.Contains(_input.MousePosition()))
                 {
-                    
+                    ((MatchCutesGame)Game).restart();
                 }
                 else if (_quitButton.Contains(_input.MousePosition()))
                 {
@@ -70,7 +70,7 @@ namespace MatchCutes
             if (_ScoreServ.gameOver)
             {
                 base.GraphicsDevice.Clear(Color.Black);
-                spriteBatch.DrawString(_font, "GAAAAAAAAAME OVVVVVVVVER", new Vector2(300, 500), Color.Pink);
+                spriteBatch.DrawString(_font, "GAAAAAAAAAME OVEEEEEER", new Vector2(300, 500), Color.Pink);
             }
 
             spriteBatch.DrawString(_font, "Your score: " + _ScoreServ.Score, new Vector2(740, 40), Color.DeepPink);

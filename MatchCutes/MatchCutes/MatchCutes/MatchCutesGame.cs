@@ -11,13 +11,6 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MatchCutes
 {
-    public enum GemType
-    {
-        None,
-        Blue,
-        Green,
-        Orange
-    }
 
     public class MatchCutesGame : Microsoft.Xna.Framework.Game
     {
@@ -58,7 +51,13 @@ namespace MatchCutes
             base.Initialize();
 
         }
-
+        public void restart()
+        {
+            Components.Remove(bordComponent);
+            bordComponent = new BordComponent(this);
+            Components.Add(bordComponent);
+        
+        }
         protected override void Update(GameTime gameTime)
         {
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
