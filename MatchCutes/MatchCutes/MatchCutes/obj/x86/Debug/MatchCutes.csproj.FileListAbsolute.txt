@@ -1,0 +1,10 @@
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\Gem Blue.xnb
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\Gem Green.xnb
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\Gem Orange.xnb
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\Star.xnb
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\GameFont.xnb
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\MatchCutes.exe
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\MatchCutes.pdb
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\MatchCutes.exe
+Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\MatchCutes.pdb
