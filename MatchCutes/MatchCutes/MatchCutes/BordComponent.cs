@@ -20,6 +20,8 @@ namespace MatchCutes
 
         private int fieldX = 7;
         private int fieldY = 12;
+        private Rectangle gameFrame;
+        private int gridSize = 80;
 
         public GemType[,] Playfield = new GemType[7, 12];
         private Random _randomizer = new Random();
@@ -37,15 +39,13 @@ namespace MatchCutes
 
         Color _fadedColor = new Color(160, 160, 160, 160);
         private Point _selected = new Point(-1, -1);
-        private MouseState _curMouseState;
-        private MouseState _prevMouseState;
 
         private double _dropDownTimer;
         private const double time_between_block_drops = 0.25f;
         private int _remainingMoves;
         private int _allowedMovesBeforeSpawn = 2;
 
-        private bool gameOver;
+        private InputComponent _input;
 
         private ScoreService _ScoreServ;
 
@@ -54,19 +54,16 @@ namespace MatchCutes
         public BordComponent(Game game)
             : base(game)
         {
-            gameOver = false;
+            gameFrame = new Rectangle(0, 0, fieldX * gridSize, fieldY * gridSize);
         }
 
         public override void Initialize()
         {
+            _input = (InputComponent)Game.Services.GetService(typeof(InputComponent));
             _ScoreServ = (ScoreService)Game.Services.GetService(typeof(ScoreService));
 
             base.Initialize();
-            //spriteBatch = new SpriteBatch(GraphicsDevice);
 
-
-            _curMouseState = Mouse.GetState();
-            _prevMouseState = Mouse.GetState();
             spawnRow();
             moveFallingGems();
             spawnRow();
@@ -86,7 +83,7 @@ namespace MatchCutes
             {
                 if (Playfield[i, 0] != GemType.None)
                 {
-                    gameOver = true;
+                    _ScoreServ.gameOver = true;
                 }
                 GemType gem = ((GemType)_randomizer.Next(1, 4));
                 while (i > 1 && (Playfield[i - 1, 0] == gem && Playfield[i - 2, 0] == gem))
@@ -109,63 +106,64 @@ namespace MatchCutes
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-            _curMouseState = Mouse.GetState();
 
-            _dropDownTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (_dropDownTimer >= time_between_block_drops)
+            if (!_ScoreServ.gameOver)
             {
-                _dropDownTimer -= time_between_block_drops;
-                moveFallingGems();
-            }
+                _dropDownTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_remainingMoves <= 0)
-            {
-                spawnRow();
-            }
-
-            if (!_blocksAreFalling){
-                if (_curMouseState.LeftButton == ButtonState.Pressed
-                && _prevMouseState.LeftButton == ButtonState.Released)
+                if (_dropDownTimer >= time_between_block_drops)
                 {
-                    if (_selected.X == -1 && _selected.Y == -1)
-                    {
-                        _selected.X = _curMouseState.X / 80;
-                        _selected.Y = _curMouseState.Y / 80;
-                        GemType selectedGem = Playfield[_selected.X, _selected.Y];
-                        if (selectedGem == GemType.None)
-                            _selected.X = _selected.Y = -1;
-                    }
-                    else
-                    {
-                        Point newSelection = new Point(_curMouseState.X / 80, _curMouseState.Y / 80);
-                        GemType selectedGem = Playfield[newSelection.X, newSelection.Y];
-                        if (selectedGem == GemType.None || (_selected.X == newSelection.X) && _selected.Y == newSelection.Y)
+                    _dropDownTimer -= time_between_block_drops;
+                    moveFallingGems();
+                }
+
+                if (_remainingMoves <= 0)
+                {
+                    spawnRow();
+                }
+
+                if (!_blocksAreFalling)
+                {
+                    if (_input.mouseClick())
+                        if (gameFrame.Contains(_input.MousePosition()))
                         {
-                            _selected.X = _selected.Y = -1;
-                        }
-                        else
-                        {
-                            int distance = Math.Abs(_selected.X - newSelection.X) + Math.Abs(_selected.Y - newSelection.Y);
-                            if (distance == 1)
                             {
-                                Playfield[newSelection.X, newSelection.Y] = Playfield[_selected.X, _selected.Y];
-                                Playfield[_selected.X, _selected.Y] = selectedGem;
-                                _selected.X = _selected.Y = -1;
-                                _remainingMoves--;
-                                _dropDownTimer = time_between_block_drops;
+                                if (_selected.X == -1 && _selected.Y == -1)
+                                {
+                                    _selected.X = _input.MousePosition().X / 80;
+                                    _selected.Y = _input.MousePosition().Y / 80;
+                                    GemType selectedGem = Playfield[_selected.X, _selected.Y];
+                                    if (selectedGem == GemType.None)
+                                        _selected.X = _selected.Y = -1;
+                                }
+                                else
+                                {
+                                    Point newSelection = new Point(_input.MousePosition().X / 80, _input.MousePosition().Y / 80);
+                                    GemType selectedGem = Playfield[newSelection.X, newSelection.Y];
+                                    if (selectedGem == GemType.None || (_selected.X == newSelection.X) && _selected.Y == newSelection.Y)
+                                    {
+                                        _selected.X = _selected.Y = -1;
+                                    }
+                                    else
+                                    {
+                                        int distance = Math.Abs(_selected.X - newSelection.X) + Math.Abs(_selected.Y - newSelection.Y);
+                                        if (distance == 1)
+                                        {
+                                            Playfield[newSelection.X, newSelection.Y] = Playfield[_selected.X, _selected.Y];
+                                            Playfield[_selected.X, _selected.Y] = selectedGem;
+                                            _selected.X = _selected.Y = -1;
+                                            _remainingMoves--;
+                                            _dropDownTimer = time_between_block_drops;
+                                        }
+                                    }
+                                }
                             }
                         }
 
-                    }
+                    detectClusters();
                 }
-                
-                detectClusters();
             }
-
             base.Update(gameTime);
-            _prevMouseState = _curMouseState;
         }
         private void detectClusters()
         {
@@ -272,7 +270,7 @@ namespace MatchCutes
             bool foundGem = false;
             for (int x = 0; x < fieldX; x++)
             {
-                for (int y = fieldY-1; y > 0; y--)
+                for (int y = fieldY - 1; y > 0; y--)
                 {
                     GemType gem = Playfield[x, y - 1];
                     if (gem != GemType.None && Playfield[x, y] == GemType.None)
@@ -284,7 +282,9 @@ namespace MatchCutes
                 }
             }
             _blocksAreFalling = foundGem;
+
         }
+
         public override void Draw(GameTime gameTime)
         {
 

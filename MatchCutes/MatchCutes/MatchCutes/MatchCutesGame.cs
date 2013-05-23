@@ -36,20 +36,25 @@ namespace MatchCutes
             graphics.PreferredBackBufferHeight = 1024;
             graphics.PreferredBackBufferWidth = 1024;
             graphics.ApplyChanges();
-            bordComponent = new BordComponent(this);
-            textComponent = new TextComponent(this);
 
-
-            this.Components.Add(bordComponent);
-            this.Components.Add(textComponent);
         }
 
         protected override void Initialize()
         {
+            InputComponent input = new InputComponent(this);
+            Components.Add(input);
+            Services.AddService(typeof(InputComponent), input);
+
+            bordComponent = new BordComponent(this);
+            textComponent = new TextComponent(this);
+
+            this.Components.Add(bordComponent);
+            this.Components.Add(textComponent);
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ScoreService Scores = new ScoreService();
             Services.AddService(typeof(ScoreService), Scores);
+
             base.Initialize();
 
         }

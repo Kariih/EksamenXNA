@@ -19,6 +19,11 @@ namespace MatchCutes
         private ScoreService _ScoreServ;
         private SpriteBatch spriteBatch;
 
+        private Rectangle _restartButton = new Rectangle(740, 850, 200, 70);
+        private Rectangle _quitButton = new Rectangle(740, 900, 200, 70);
+
+        InputComponent _input;
+
         public TextComponent(Game game)
             : base(game)
         {
@@ -27,6 +32,7 @@ namespace MatchCutes
 
         public override void Initialize()
         {
+            _input = (InputComponent)Game.Services.GetService(typeof(InputComponent));
             _ScoreServ = (ScoreService)Game.Services.GetService(typeof(ScoreService));
 
             base.Initialize();
@@ -41,6 +47,18 @@ namespace MatchCutes
 
         public override void Update(GameTime gameTime)
         {
+            if(_input.mouseClick())
+            {
+                if(_restartButton.Contains(_input.MousePosition()))
+                {
+                    
+                }
+                else if (_quitButton.Contains(_input.MousePosition()))
+                {
+                    Game.Exit();
+                }
+            }
+
 
             base.Update(gameTime);
         }
@@ -49,10 +67,18 @@ namespace MatchCutes
  	         base.Draw(gameTime); 
 
             spriteBatch.Begin();
+            if (_ScoreServ.gameOver)
+            {
+                base.GraphicsDevice.Clear(Color.Black);
+                spriteBatch.DrawString(_font, "GAAAAAAAAAME OVVVVVVVVER", new Vector2(300, 500), Color.Pink);
+            }
+
             spriteBatch.DrawString(_font, "Your score: " + _ScoreServ.Score, new Vector2(740, 40), Color.DeepPink);
 
-            spriteBatch.DrawString(_font, "RESTART GAME", new Vector2(740, 600), Color.DeepPink);
-            spriteBatch.DrawString(_font, "QUIT GAME", new Vector2(740, 900), Color.DeepPink);
+            //flyttet restart button lengre ned fordi jeg syns det så bedre ut
+            spriteBatch.DrawString(_font, "RESTART GAME", new Vector2(740, 850), (_restartButton.Contains(_input.MousePosition())) ? Color.White : Color.DeepPink);
+            spriteBatch.DrawString(_font, "QUIT GAME", new Vector2(740, 900), (_quitButton.Contains(_input.MousePosition())) ? Color.White : Color.DeepPink);
+
 
             spriteBatch.End();
         }

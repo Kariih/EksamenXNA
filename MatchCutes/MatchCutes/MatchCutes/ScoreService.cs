@@ -8,5 +8,6 @@ namespace MatchCutes
     class ScoreService
     {
         public int Score { get; set; }
+        public bool gameOver { get; set; }
     }
 }
