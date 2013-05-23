@@ -8,3 +8,13 @@ Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\MatchCutes.pdb
 Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\MatchCutes.exe
 Z:\Downloads\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\MatchCutes.pdb
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\Gem Blue.xnb
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\Gem Green.xnb
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\Gem Orange.xnb
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\Star.xnb
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\Content\GameFont.xnb
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\MatchCutes.exe
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\bin\x86\Debug\MatchCutes.pdb
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\MatchCutes.exe
+Z:\Git\EksamenXNA\MatchCutes\MatchCutes\MatchCutes\obj\x86\Debug\MatchCutes.pdb
