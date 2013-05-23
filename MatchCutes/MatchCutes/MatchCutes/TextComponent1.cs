@@ -12,33 +12,49 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MatchCutes
 {
-    /// <summary>
-    /// This is a game component that implements IUpdateable.
-    /// </summary>
-    public class TextComponent1 : Microsoft.Xna.Framework.GameComponent
+
+    public class TextComponent : Microsoft.Xna.Framework.DrawableGameComponent
     {
-
-        public int Score { get; set; }
         private SpriteFont _font;
+        private ScoreService _ScoreServ;
+        private SpriteBatch spriteBatch;
 
-        public TextComponent1(Game game)
+        public TextComponent(Game game)
             : base(game)
         {
-            // TODO: Construct any child components here
+
         }
 
         public override void Initialize()
         {
-            // TODO: Add your initialization code here
+            _ScoreServ = (ScoreService)Game.Services.GetService(typeof(ScoreService));
 
             base.Initialize();
+        }
+        protected override void LoadContent()
+        {
+
+            _font = Game.Content.Load<SpriteFont>("GameFont");
+            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
 
             base.Update(gameTime);
+        }
+        public override void  Draw(GameTime gameTime)
+        {
+ 	         base.Draw(gameTime); 
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(_font, "Your score: " + _ScoreServ.Score, new Vector2(740, 40), Color.DeepPink);
+
+            spriteBatch.DrawString(_font, "RESTART GAME", new Vector2(740, 600), Color.DeepPink);
+            spriteBatch.DrawString(_font, "QUIT GAME", new Vector2(740, 900), Color.DeepPink);
+
+            spriteBatch.End();
         }
     }
 }
