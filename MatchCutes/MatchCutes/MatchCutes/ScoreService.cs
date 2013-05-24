@@ -9,5 +9,6 @@ namespace MatchCutes
     {
         public int Score { get; set; }
         public bool gameOver { get; set; }
+        public int clickCount {get; set;}
     }
 }

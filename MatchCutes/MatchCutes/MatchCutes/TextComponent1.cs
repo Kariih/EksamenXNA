@@ -74,6 +74,7 @@ namespace MatchCutes
             }
 
             spriteBatch.DrawString(_font, "Your score: " + _ScoreServ.Score, new Vector2(740, 40), Color.DeepPink);
+            spriteBatch.DrawString(_font, "Moves done: " + _ScoreServ.clickCount, new Vector2(740, 80), Color.DeepPink);
 
             //flyttet restart button lengre ned fordi jeg syns det så bedre ut
             spriteBatch.DrawString(_font, "RESTART GAME", new Vector2(740, 850), (_restartButton.Contains(_input.MousePosition())) ? Color.White : Color.DeepPink);

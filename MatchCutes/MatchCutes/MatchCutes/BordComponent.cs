@@ -24,8 +24,6 @@ namespace MatchCutes
     public class BordComponent : Microsoft.Xna.Framework.DrawableGameComponent
     {
 
-        public int Score { get; set; }
-
         private int fieldX = 7;
         private int fieldY = 12;
         private Rectangle gameFrame;
@@ -56,7 +54,6 @@ namespace MatchCutes
         private int _allowedMovesBeforeSpawn = 2;
 
         private InputComponent _input;
-
         private ScoreService _ScoreServ;
 
         SpriteBatch spriteBatch;
@@ -85,8 +82,8 @@ namespace MatchCutes
             spawnRow();
             moveFallingGems();
             detectClusters();
-            Score = 0;
             _remainingMoves = 0;
+            _ScoreServ.clickCount = 0;
         }
 
         private void spawnRow()
@@ -153,7 +150,7 @@ namespace MatchCutes
                     if (_input.mouseClick())
                         if (gameFrame.Contains(_input.MousePosition()))
                         {
-                            {
+                            { 
                                 if (_selected.X == -1 && _selected.Y == -1)
                                 {
                                     _selected.X = _input.MousePosition().X / 80;
@@ -180,6 +177,7 @@ namespace MatchCutes
                                             _selected.X = _selected.Y = -1;
                                             _remainingMoves--;
                                             _dropDownTimer = time_between_block_drops;
+                                            _ScoreServ.clickCount++;
                                         }
                                     }
                                 }
