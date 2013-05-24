@@ -126,6 +126,7 @@ namespace MatchCutes
 
             if (!_ScoreServ.gameOver)
             {
+
                 _dropDownTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (_dropDownTimer >= time_between_block_drops)
@@ -134,9 +135,17 @@ namespace MatchCutes
                     moveFallingGems();
                 }
 
-                if (_remainingMoves <= 0)
+                if (_remainingMoves <= 0 && _ScoreServ.Score < 50000)
                 {
                     spawnRow();
+                }
+                else if (_remainingMoves <= 0 && _ScoreServ.Score >=                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     50000)
+                {
+  
+                    spawnRow();
+                    moveFallingGems();
+                    spawnRow();
+
                 }
 
                 if (!_blocksAreFalling)
@@ -190,8 +199,11 @@ namespace MatchCutes
                 detectColumnCluster(x);
 
             _ScoreServ.Score += (_greenHits.Count * _greenHits.Count + _blueHits.Count * _blueHits.Count +
-                      _orangeHits.Count * _orangeHits.Count) * 100;
+                      _orangeHits.Count * _orangeHits.Count + _starHits.Count * _starHits.Count) * 100;
             removeCountedClusters();
+
+            if (_ScoreServ.Score >= 10000)
+                _allowedMovesBeforeSpawn = 1;
 
         }
 
@@ -200,9 +212,21 @@ namespace MatchCutes
             for (int yStart = 0; yStart < fieldY - 3; yStart++)
             {
                 GemType gem = Playfield[column, yStart];
+                if (gem == GemType.None)
+                {
+                    continue;
+                }
                 int hits = 0;
                 for (int y = yStart; y < fieldY; y++)
                 {
+                    if (gem == GemType.Star)
+                    {
+                        gem = Playfield[column, y];
+                    }
+                    if (gem == GemType.None)
+                    {
+                        break;
+                    }
                     if (gem != Playfield[column, y] && Playfield[column, y] != GemType.Star)
                     {
                         if (hits < 4)
@@ -226,9 +250,21 @@ namespace MatchCutes
             for (int xStart = 0; xStart < 7 - 3; xStart++)
             {
                 GemType gem = Playfield[xStart, row];
+                if (gem == GemType.None)
+                {
+                    continue;
+                }
                 int hits = 0;
                 for (int x = xStart; x < fieldX; x++)
                 {
+                    if (gem == GemType.Star)
+                    {
+                        gem = Playfield[x, row];
+                    }
+                    if (gem == GemType.None)
+                    {
+                        break;
+                    }
                     if (gem != Playfield[x, row] && Playfield[x, row] != GemType.Star)
                     {
                         if (hits < 4)
@@ -261,9 +297,14 @@ namespace MatchCutes
             {
                 Playfield[hit.X, hit.Y] = GemType.None;
             }
+            foreach (Point hit in _starHits)
+            {
+                Playfield[hit.X, hit.Y] = GemType.None;
+            }
             _blueHits.Clear();
             _greenHits.Clear();
             _orangeHits.Clear();
+            _starHits.Clear();
         }
 
         private void addHit(Point position)
@@ -309,6 +350,9 @@ namespace MatchCutes
         {
 
             spriteBatch.Begin();
+
+            if(!_ScoreServ.gameOver)
+            {
             for (int x = 0; x < fieldX; x++)
             {
                 for (int y = 0; y < fieldY; y++)
@@ -336,6 +380,7 @@ namespace MatchCutes
                     else
                     {
                         spriteBatch.Draw(toDraw, new Rectangle(x * 80, y * 80, 72, 72), _gemSource, _fadedColor);
+                      }
                     }
                 }
             }

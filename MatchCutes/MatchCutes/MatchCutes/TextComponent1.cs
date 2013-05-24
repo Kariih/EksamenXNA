@@ -19,8 +19,8 @@ namespace MatchCutes
         private ScoreService _ScoreServ;
         private SpriteBatch spriteBatch;
 
-        private Rectangle _restartButton = new Rectangle(740, 850, 200, 70);
-        private Rectangle _quitButton = new Rectangle(740, 900, 200, 70);
+        private Rectangle _restartButton = new Rectangle(740, 850, 200, 50);
+        private Rectangle _quitButton = new Rectangle(740, 900, 200, 50);
 
         InputComponent _input;
 

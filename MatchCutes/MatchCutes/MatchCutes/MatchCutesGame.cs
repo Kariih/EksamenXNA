@@ -26,7 +26,7 @@ namespace MatchCutes
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 1024;
+            graphics.PreferredBackBufferHeight = 950;
             graphics.PreferredBackBufferWidth = 1024;
             graphics.ApplyChanges();
 
