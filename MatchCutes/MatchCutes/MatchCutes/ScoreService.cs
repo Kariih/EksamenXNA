@@ -5,6 +5,8 @@ using System.Text;
 
 namespace MatchCutes
 {
+
+    // Laget et service for å lett kunne bruke variabler mellom gameklassen, textComponent og bordComponent.
     class ScoreService
     {
         public int Score { get; set; }

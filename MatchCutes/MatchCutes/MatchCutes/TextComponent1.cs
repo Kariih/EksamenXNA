@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MatchCutes
 {
-
+ 
     public class TextComponent : Microsoft.Xna.Framework.DrawableGameComponent
     {
         private SpriteFont _font;
@@ -73,12 +73,13 @@ namespace MatchCutes
                 spriteBatch.DrawString(_font, "GAAAAAAAAAME OVEEEEEER", new Vector2(300, 500), Color.Pink);
             }
 
-            spriteBatch.DrawString(_font, "Your score: " + _ScoreServ.Score, new Vector2(740, 40), Color.DeepPink);
-            spriteBatch.DrawString(_font, "Moves done: " + _ScoreServ.clickCount, new Vector2(740, 80), Color.DeepPink);
+            spriteBatch.DrawString(_font, "Your score: " + _ScoreServ.Score, new Vector2(740, 40), Color.HotPink);
+            //La til en variabel som teller antall trekk du tar.
+            spriteBatch.DrawString(_font, "Moves done: " + _ScoreServ.clickCount, new Vector2(740, 80), Color.HotPink);
 
-            //flyttet restart button lengre ned fordi jeg syns det så bedre ut
-            spriteBatch.DrawString(_font, "RESTART GAME", new Vector2(740, 850), (_restartButton.Contains(_input.MousePosition())) ? Color.White : Color.DeepPink);
-            spriteBatch.DrawString(_font, "QUIT GAME", new Vector2(740, 900), (_quitButton.Contains(_input.MousePosition())) ? Color.White : Color.DeepPink);
+            //flyttet restart button lengre ned fordi da ble det seende mer ut som en meny.
+            spriteBatch.DrawString(_font, "RESTART GAME", new Vector2(740, 850), (_restartButton.Contains(_input.MousePosition())) ? Color.LightPink: Color.DeepPink);
+            spriteBatch.DrawString(_font, "QUIT GAME", new Vector2(740, 900), (_quitButton.Contains(_input.MousePosition())) ? Color.LightPink : Color.DeepPink);
 
 
             spriteBatch.End();

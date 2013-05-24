@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MatchCutes
 {
-
+    //Laget en egen inputComponent for å holde input for mus for seg selv.
     public class InputComponent : Microsoft.Xna.Framework.GameComponent
     {
         public MouseState currentMouseState { get; protected set; }

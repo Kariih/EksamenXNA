@@ -26,6 +26,7 @@ namespace MatchCutes
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             graphics = new GraphicsDeviceManager(this);
+            //Satte ned høyden på spillet for at den skal passe akkurat med spillebrettet.
             graphics.PreferredBackBufferHeight = 950;
             graphics.PreferredBackBufferWidth = 1024;
             graphics.ApplyChanges();
